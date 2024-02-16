@@ -13,44 +13,49 @@
             My Expense Analyser
             <small class="text-muted">to manage your spendings</small>
         </h1>
+        <form id="999">
+          <label for="fname">Where was the money spent?
+          </label>
+          <input class="form-control" type="text" id="fname" name="fname" placeholder="ex: Walmart, Bowling..." > 
+
+          <label for="fprice">How many c.a.d did you spend?</label>
+          <br>
+          <input class="form-control form-control-sm" type="number"id="fnumber" name="fnumber" placeholder="ex: 50, 20...">
+          <label for="fcategory">Category</label>
+          <select class="form-control" id="fcategory"name="fcategory">
+              <option>Default select</option>
+              <option value="Entertainement">Entertainement</option>
+              <option value="Groceries">Groceries</option>
+              <option value="Transport">Transport</option>
+              <option value="Restaurant">Restaurant</option>
+              <option value="Stationary"> Stationary</option>
+              <option value="Electronics"> Electronics</option>
+          </select>
+          <br>
+          <a class="btn btn-primary" role="button" onclick="submitExpense()">Confirm</a>
+      </form>
+
+
         <table class="table" id="table">
             <thead>
               <tr>
                 <th scope="col">$</th>
                 <th scope="col">Merchant name</th>
-                <th scope="col">Cathegory</th>
+                <th scope="col">Category</th>
                 <th scope="col">     </th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td><button type="button" class="btn btn-danger" onclick="del()">Delete</button></td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td><button type="button" class="btn btn-danger" onclick="del()">Delete</button></td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td><button type="button" class="btn btn-danger" onclick="del()">Delete</button></td>
-              </tr>
+              
             </tbody>
           </table>
-          <a class="btn btn-primary" href="Expense_adding.html" role="button">Add Expense</a>
           <br>
-          <h6>You have spent a total of $ <span id="spent"></span> this month, distributed in the following way:</h6>
+          <h6>You have spent a total of $<span id="spent"></span> this month, distributed in the following ways:</h6>
 
 
 
 
-          <table class="table" id="table">
+          <table class="table" id="table2">
             <tr>
                 <td class="text-center">
                     <img src="entertainement_icon.png" alt="Money spent on entertainement" class="img-thumbnail" width="100">
@@ -77,12 +82,12 @@
                 </td>
             </tr>
             <tr>
-                <td class="text-center"> 0$</td>
-                <td class="text-center"> 0$</td>
-                <td class="text-center"> 0$</td>
-                <td class="text-center"> 0$</td>
-                <td class="text-center"> 0$</td>
-                <td class="text-center"> 0$</td>
+                <td class="text-center"> $<span id="a1"></span></td>
+                <td class="text-center"> $<span id="a2"></span></td>
+                <td class="text-center"> $<span id="a3"></span></td>
+                <td class="text-center"> $<span id="a4"></span></td>
+                <td class="text-center"> $<span id="a5"></span></td>
+                <td class="text-center"> $<span id="a6"></span></td>
 
             </tr>
             
