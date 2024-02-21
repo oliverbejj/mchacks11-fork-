@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, status
 from pydantic import BaseModel, Field
 from uuid import UUID
 import models
@@ -13,9 +13,11 @@ models.Base.metadata.create_all(bind=engine)
 
 
 
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:8000/", "http://127.0.0.1:8000/", "*" ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,16 +43,17 @@ class Product(BaseModel):
 
 
 
-@app.get("/send")
-def read_root(db: Session = Depends(get_db)):
-    try:
-        return db.query(models.Product).all()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))    
+@app.get("/send/")
+def read_root(db: Session = Depends(get_db), skip: int = 0, limit: int = 100):
+    print("Request received at /send endpoint")
+    db_exp_rec = db.query(models.Product).offset(skip).limit(limit).all()
+    if db_exp_rec is None:
+        HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Expense record not found")
+    return db_exp_rec
+    
 
 
-
-@app.post("/posts")
+@app.post("/posts/")
 def create_product(product: Product, db: Session = Depends(get_db)):
     db_product = models.Product(id=product.id, name=product.name, category=product.category, price=product.price)
     db.add(db_product)
@@ -60,9 +63,8 @@ def create_product(product: Product, db: Session = Depends(get_db)):
     return db_product
 
 
-PRODUCTS = []  # Define the PRODUCTS variable as an empty list
 
-@app.delete("/del/{product_id}")
+@app.delete("/del/{product_id}/")
 def delete_product(product_id: int, db: Session = Depends(get_db)):
     product_model=db.query(models.Product).filter(models.Product.id==product_id).first()
 
@@ -76,8 +78,12 @@ def delete_product(product_id: int, db: Session = Depends(get_db)):
 
 
 
-@app.delete("/clear")
+@app.delete("/clear/")
 def clear_db(db: Session = Depends(get_db)):
     db.query(models.Product).delete()
     db.commit()
     return {"detail": "Database cleared successfully"}
+
+
+
+

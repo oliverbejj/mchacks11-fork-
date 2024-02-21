@@ -16,6 +16,7 @@ document.getElementById("a6").innerHTML=ele;
 var dict1={"Entertainement":ent, "Groceries":gro, "Restaurant":res, "Stationary":sta, "Transport":tra,"Electronics":ele};
 
 function submitExpense() {
+  //window.location.reload();
   var name= document.getElementById("fname");
   var price= document.getElementById("fnumber");
   var category = document.getElementById("fcategory");
@@ -74,6 +75,8 @@ var data = {
   'category': vcategory
 };
 
+
+
 // Make a POST request to your FastAPI endpoint
 fetch('http://127.0.0.1:8000/posts', {
   method: 'POST',
@@ -93,10 +96,13 @@ fetch('http://127.0.0.1:8000/posts', {
     // Handle any errors
     console.error(error);
   });
+  
 
   /*
   fetch(`http://127.0.0.1:8000/clear`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'include'
     })
       .then(response => response.json())
       .then(data => {
@@ -104,8 +110,8 @@ fetch('http://127.0.0.1:8000/posts', {
       })
       .catch(error => {
         console.error('Error:', error);
-      });
-      */
+      });*/
+      
 }
 
 
@@ -137,7 +143,8 @@ function del(b){
 
 
   fetch(`http://127.0.0.1:8000/data/${iddd}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      mode: 'cors'
     })
       .then(response => response.json())
       .then(data => {
@@ -151,17 +158,28 @@ function del(b){
 
 window.addEventListener('beforeunload', function() {
   
-  fetch('http://localhost:8000/send')
-    .then(response => response.json())
-    .then(data => {
-      
-      // Display the data on the HTML page
-      const dataStr = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
-      console.log(dataStr);
-
-
-    })
-    .catch(rejected => {
-      console.error(rejected);
-    });
+  fetch('http://127.0.0.1:8000/send/', {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    timeout: 5000,
+})
+.then(response => {
+    console.log('Response Status:', response.status);  // Log the response status
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log("Works", data);
+})
+.catch(error => {
+    console.error('Error:', error);
 });
+
+
+
+}); 
