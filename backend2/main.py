@@ -1,10 +1,10 @@
 from fastapi import FastAPI, HTTPException, Depends, status
 from pydantic import BaseModel, Field
-from uuid import UUID
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import Column, Integer, String
 
 
 app = FastAPI()
@@ -35,7 +35,7 @@ def get_db():
 
 
 class Product(BaseModel):
-    id: int = Field(min_LENGTH=1)
+    id: int = Field(min_LENGTH=1, autoincrement=True, primary_key=True)
     name: str = Field(min_length=1)
     category: str = Field(min_length=1)
     price: int = Field(gt=-1)
@@ -55,7 +55,7 @@ def read_root(db: Session = Depends(get_db), skip: int = 0, limit: int = 100):
 
 @app.post("/posts/")
 def create_product(product: Product, db: Session = Depends(get_db)):
-    db_product = models.Product(id=product.id, name=product.name, category=product.category, price=product.price)
+    db_product = models.Product(name=product.name, category=product.category, price=product.price)
     db.add(db_product)
     db.commit()
     db.refresh(db_product)
