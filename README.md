@@ -1,6 +1,6 @@
 # Expense Keeper Web App
 
-Welcome to the Expense Keeper web app! Originally developed during the McHacks11 hackathon, our team aimed to create a user-friendly tool for efficient expense management. While I initially led the front-end development during the hackathon, we encountered challenges that hindered project completion. Subsequently, I revisited the project to rewrite and enhance the backend, resulting in my own backend code available in the `backend2` file. (for comprehension purposes) 
+Welcome to the Expense Keeper web app! Originally developed during the McHacks11 hackathon, our team aimed to create a user-friendly tool for efficient expense management. While I initially led the front-end development during the hackathon, we encountered challenges that hindered project completion. Subsequently, I revisited the project to completely rewrite the backend (in order to fix it I had to understand it), resulting in my own backend code available in the `backend2` file.
 
 ## Features (Work in Progress)
 
